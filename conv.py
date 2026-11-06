@@ -2,8 +2,8 @@ import os
 import glob
 import shutil
 
-path_to_fake_files = "/opt/zapret/files/fake/"
-path_to_ipset_hostlist = "/opt/zapret/ipset/"
+path_to_fake_files = "/opt/zapret/bin/"
+path_to_ipset_hostlist = "/opt/zapret/lists/"
 
 
 
@@ -12,8 +12,9 @@ def processer(x):
     print(filename)
     with open(files[x],'r') as f:
         content=f.readlines()
-        del content[0:15]
-        conc="".join(content).replace("\n","").replace("%GameFilter%","0").replace("^","").replace("%BIN%",path_to_fake_files).replace("%LISTS%",path_to_ipset_hostlist)
+        del content[0:16]
+        conc="".join(content).replace("\n","").replace('start "zapret: %~n0" /min "/opt/zapret/bin/winws.exe" --wf-tcp=80,443,2053,2083,2087,2096,8443,%GameFilterTCP% --wf-udp=443,19294-19344,50000-50100,%GameFilterUDP%',"").replace("%GameFilterTCP%","0").replace("%GameFilterUDP%","0").replace("^","").replace("%BIN%",path_to_fake_files).replace("%LISTS%",path_to_ipset_hostlist)
+        #print(conc)
         new_file="config"+filename
         with open("config.blank","r") as fr, open(new_file,"w") as fw:
             for line in fr:
